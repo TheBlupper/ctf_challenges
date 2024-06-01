@@ -1,7 +1,7 @@
 # vpclmullqlqdq
 > Really rolls of the tongue doesn't it?
 
-This challenge makes heavy use of the x86 instruction with the same name, which is part of the [CLMUL instruction set](https://en.wikipedia.org/wiki/CLMUL_instruction_set). As can be seen on Wikipedia, "carry-less multiplication" (which is what the function does) can be seen as interpreting the bits of two numbers as coefficients in two polynomials and then multiplying the polynomials modulo 2 (i.e in $\text{GF}(2)$).
+This challenge makes heavy use of the x86 instruction with the same name, which is part of the [CLMUL instruction set](https://en.wikipedia.org/wiki/CLMUL_instruction_set). As can be seen on Wikipedia, "carry-less multiplication" (which is what the function does) can be seen as interpreting the bits of two numbers as coefficients in two polynomials and then multiplying the polynomials modulo 2 (i.e in $\text{GF}(2)$ ).
 
 It decrypts a blob of data via use of this instruction, this can be pretty easily recovered by stepping through the program of writing a small decryption program yourself. The result is shellcode which is executed, which when decompiled with Binary Ninja looks like this:
 ```c

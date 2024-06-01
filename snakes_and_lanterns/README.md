@@ -1,0 +1,8 @@
+# Snakes and Lanterns
+> I can't see nothin' in 'ere!
+
+This challenge makes use of some Python tricks to modify the underlying bytecode while it is running. I won't go into much detail of the actual obfuscation since it usually doesn't work well in a writeup format, the gist is that it uses control-flow flattening in the end to jump between the different if-clauses you can see. It does operations on some data at the end of the program which is encoded using the long string of digits at the end. If we take this to be an array `arr=[38,51,...,67]` (64 numbers long) then the simplified program looks like [this](./rev.py).
+
+Some might recognize this as a variation of the "Lights Out" puzzle, where "pressing" a square will affect both it and it's neighbors, and the goal is for the whole board to be turned off. The [classical game](https://www.logicgamesonline.com/lightsout/) works modulo 2; each square can either be on or off. Here we instead work modulo 97.
+
+The game can be solved using some linear algebra. Each press can be encoded as a column in a matrix which will be multiplied by whatever value we should press that square with. A linear combination of these columns should take us to zero, or in this case the inverse of the starting grid. The solution can be seen [here](./solve.py) and a good explanation of the solution can be found [here](https://www.youtube.com/watch?v=0fHkKcy0x_U).

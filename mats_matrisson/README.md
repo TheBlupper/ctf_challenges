@@ -24,8 +24,8 @@ samt låt $\lambda_1, \lambda_2$ och $\lambda_3$ vara egenvärdena till $A$ och 
 
 $$
 \begin{align}
-t = & \operatorname{tr}(A) = \lambda_1 + \lambda_2 + \lambda_3 \\
-d = &\operatorname{det}(f(A)) = f(\lambda_1)f(\lambda_2)f(\lambda_3) \\
+t = & \text{tr}(A) = \lambda_1 + \lambda_2 + \lambda_3 \\
+d = &\text{det}(f(A)) = f(\lambda_1)f(\lambda_2)f(\lambda_3) \\
 c = &\text{koefficienten framför } x \text{ i } p_{g(f(A))}(x)
 \end{align}
 $$

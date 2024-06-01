@@ -1,7 +1,7 @@
 # vpclmullqlqdq
 > Really rolls of the tongue doesn't it?
 
-This challenge makes heavy use of the x86 instruction with the same name, which is part of the [CLMUL instruction set](https://en.wikipedia.org/wiki/CLMUL_instruction_set). As can be seen on Wikipedia, "carry-less multiplication" (which is what the function does) can be seen as interpreting the bits of two numbers as coefficients in two polynomials and then multiplying the polynomials modulo 2 (i.e in $\operatorname{GF}(2)$).
+This challenge makes heavy use of the x86 instruction with the same name, which is part of the [CLMUL instruction set](https://en.wikipedia.org/wiki/CLMUL_instruction_set). As can be seen on Wikipedia, "carry-less multiplication" (which is what the function does) can be seen as interpreting the bits of two numbers as coefficients in two polynomials and then multiplying the polynomials modulo 2 (i.e in $\text{GF}(2)$).
 
 It decrypts a blob of data via use of this instruction, this can be pretty easily recovered by stepping through the program of writing a small decryption program yourself. The result is shellcode which is executed, which when decompiled with Binary Ninja looks like this:
 ```c
@@ -38,7 +38,7 @@ void sub_0(int32_t* out @ r14, void* inp @ r15, int64_t arg3, int64_t arg4, int6
 }
 ```
 
-Here the result of each polynomial multiplication is actually truncated; only the lower 64 bits of each result is used. Furthermore, XOR:ing in this context is actually equivalent to adding two polynomials and then taking mod 2. This means that each of the 4 clauses above are actually linear equations in our input, if you consider it to be in the ring $\operatorname{GF}(2)[x]/(x^{64})$. $\operatorname{GF}(2)[x]$ is just the ring of polynomials with coefficients in $\operatorname{GF}(2)$, and then we quotient (think of it as working modulo) by $x^{64}$. This is equivalent with truncating to the lower 64 bits (whenever a polynomials degree is greater than 64 the upper terms can be subtracted away by some multiple of $x^{64}$).
+Here the result of each polynomial multiplication is actually truncated; only the lower 64 bits of each result is used. Furthermore, XOR:ing in this context is actually equivalent to adding two polynomials and then taking mod 2. This means that each of the 4 clauses above are actually linear equations in our input, if you consider it to be in the ring $\text{GF}(2)[x]/(x^{64})$. $\text{GF}(2)[x]$ is just the ring of polynomials with coefficients in $\text{GF}(2)$, and then we quotient (think of it as working modulo) by $x^{64}$. This is equivalent with truncating to the lower 64 bits (whenever a polynomials degree is greater than 64 the upper terms can be subtracted away by some multiple of $x^{64}$).
 
 Thanks to how generic Sage's tools are we can easily construct this ring and then solve the system of equations by taking a matrix inverse. See [my solve script](./solve.py).
 
